@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:InPost"
+        xmlns:local="clr-namespace:InPost" xmlns:viewmodels="clr-namespace:InPost.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1080">
     <Grid>
@@ -15,7 +15,7 @@
             Content="Odbierz paczke" Margin="410,197,280,197" Command="{Binding OdbierzPaczkeCommand}"/>
         <TextBlock x:Name="LogPaczkomatu" Text="{Binding Text}" Margin="89,200,740,200" TextAlignment="Center"/>
 
-        <ItemsControl ItemsSource="{Binding MainPaczkomat.History}" Margin="745,229,104,226">
+        <ItemsControl ItemsSource="{Binding PaczkomatMain.History}" Margin="745,229,104,226">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
