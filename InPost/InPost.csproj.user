@@ -7,10 +7,10 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Operacja.xaml.cs">
+    <Compile Update="View\Operacja.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Update="View\Operacja.xaml.cs">
+    <Compile Update="View\Paczkomat.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
@@ -18,10 +18,10 @@
     <Page Update="MainWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="Operacja.xaml">
+    <Page Update="View\Operacja.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\Operacja.xaml">
+    <Page Update="View\Paczkomat.xaml">
       <SubType>Designer</SubType>
     </Page>
   </ItemGroup>

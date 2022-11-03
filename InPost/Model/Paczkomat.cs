@@ -17,7 +17,7 @@ using System.Windows.Shapes;
 using InPost.ViewModels;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
-
+using System.Threading;
 
 namespace InPost.Model
 {
@@ -73,7 +73,7 @@ namespace InPost.Model
             }
             return null;
         }
-        public void ObsluzInteresanta()
+        public async void ObsluzInteresanta()
         {
             IOperacja x,y;
             Q.TryDequeue(out x);
@@ -85,6 +85,7 @@ namespace InPost.Model
             {
                 y = (Odebranie)x;
             }
+            await Task.Delay(1000);
             History.Add(new OperacjaViewModel(_nrPaczkomatu, x));
         }
         public void UstawDoKolejki(IOperacja interesant)

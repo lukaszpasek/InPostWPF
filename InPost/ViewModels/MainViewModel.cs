@@ -24,6 +24,7 @@ namespace InPost.ViewModels
         Task ZadanieZKolejki;
         SynchronizationContext uiContext;
         public ObservableCollection<OperacjaViewModel> MainHistory { get; set; }
+        public Collection<PaczkomatViewModel> SiecPaczkomatow { get; set; }
         public string Text { get; set; }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -47,29 +48,30 @@ namespace InPost.ViewModels
             Paczka x = new Paczka("Łukasz", "Pasek", "Mateusz", "Pasek", 222);
             Nadanie y = new Nadanie(x, 1);
             PaczkomatMain.UstawDoKolejki(y);
+        
             //ZadanieZKolejki.Start();
-            while (!PaczkomatMain.Q.IsEmpty)
-            {
-                 //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
-                 uiContext.Send(x => PaczkomatMain.ObsluzInteresanta(), null);
-            }
+            
+                //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
+           
             MessageBox.Show(sender.ToString());
+            uiContext.Post(x => PaczkomatMain.ObsluzInteresanta(), null);
             //PaczkomatMain.History.Add(new OperacjaViewModel(1, y));
             //MainHistory.Add(new OperacjaViewModel(1, y));
             //MainHistory = PaczkomatMain.History;
         }
-        private void OdbierzPaczkeClick(object sender)
+        private async void OdbierzPaczkeClick(object sender)
         {
             Odebranie y = new Odebranie(222,2);
             PaczkomatMain.UstawDoKolejki(y);
 
-            while (!PaczkomatMain.Q.IsEmpty)
-            {
-                uiContext.Send(x => PaczkomatMain.ObsluzInteresanta(), null);
-            }
+           // while (!PaczkomatMain.Q.IsEmpty)
+            //{
+              //  uiContext.Send(x => PaczkomatMain.ObsluzInteresanta(), null);
+            //}
             //ZadanieZKolejki.Start();
             //if (PaczkomatMain.Q.IsEmpty) ZadanieZKolejki.Wait();
             MessageBox.Show(sender.ToString());
+            uiContext.Post(x => PaczkomatMain.ObsluzInteresanta(), null);
             //MainHistory = PaczkomatMain.History;
 
         }

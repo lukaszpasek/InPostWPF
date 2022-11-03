@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using InPost.Model;
 
 namespace InPost.ViewModels
 {
-    internal class PaczkomatViewModel
+    public class PaczkomatViewModel
     {
     }
 }
