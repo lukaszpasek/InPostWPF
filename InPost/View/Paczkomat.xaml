@@ -3,19 +3,22 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InPost.View"
+             xmlns:local="clr-namespace:InPost.View" xmlns:viewmodels="clr-namespace:InPost.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+             xmlns:local1="clr-namespace:ValueConverters"  
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
+    <UserControl.Resources>
+        <local1:ItemsLimiter x:Key="itemslimiter"></local1:ItemsLimiter>
+    </UserControl.Resources>
+    <Grid Background="White">
         <TextBlock Text="Paczkomat nr1" Margin="340,137,340,263" TextAlignment="Center"/>
         <Button x:Name="NadajPaczke" Height="40" Width="120"   
             Content="Nadaj paczke" Margin="270,197,400,197" Command="{Binding NadajPaczkeCommand}">
         </Button>
         <Button x:Name="OdbierzPaczke" Height="40" Width="120"   
-            Content="Odbierz paczke" Margin="410,197,280,197" Command="{Binding OdbierzPaczkeCommand}"/>
-        <TextBlock x:Name="LogPaczkomatu" Text="{Binding Text}" Margin="89,200,740,200" TextAlignment="Center"/>
+            Content="Odbierz paczke" Margin="415,205,265,205" Command="{Binding OdbierzPaczkeCommand}"/>
 
-        <ItemsControl ItemsSource="{Binding PaczkomatMain.History}" Margin="745,229,104,226">
+        <ItemsControl ItemsSource="{Binding Paczkomat.History,Converter={StaticResource itemslimiter}}" Margin="275,265,265,10" RenderTransformOrigin="0.5,0.5">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>

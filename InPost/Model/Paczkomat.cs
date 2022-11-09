@@ -18,18 +18,26 @@ using InPost.ViewModels;
 using static System.Collections.Specialized.BitVector32;
 using static System.Net.Mime.MediaTypeNames;
 using System.Threading;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace InPost.Model
 {
-    public class Paczkomat
+    public class Paczkomat : INotifyPropertyChanged
     {
+        public event PropertyChangedEventHandler PropertyChanged;
         const int MAXSIZE = 64;
         private int _pos = 0;
         private int _nrPaczkomatu;
         public ConcurrentQueue<IOperacja> Q;
         private Komorka[] K;
         public ObservableCollection<OperacjaViewModel> History { get; set; }
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
         string text = "PaczkomatNr1";
+        public int IleOperacjiPokazac => Math.Min(History.Count, 3);
         public string Text
         {
             get { return text; }
@@ -85,8 +93,8 @@ namespace InPost.Model
             {
                 y = (Odebranie)x;
             }
-            await Task.Delay(1000);
-            History.Add(new OperacjaViewModel(_nrPaczkomatu, x));
+            await Task.Delay(200);
+            History.Insert(0, new OperacjaViewModel(_nrPaczkomatu, x));
         }
         public void UstawDoKolejki(IOperacja interesant)
         {

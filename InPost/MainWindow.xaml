@@ -6,7 +6,7 @@
         xmlns:viewmodels="clr-namespace:InPost.ViewModels" xmlns:local="clr-namespace:InPost.View" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="600" Width="1080">
-    <ItemsControl ItemsSource="{Binding SiecPaczkomatow}" Margin="745,229,104,226">
+    <ItemsControl ItemsSource="{Binding SiecPaczkomatow}" Margin="65,89,104,66">
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <StackPanel>
