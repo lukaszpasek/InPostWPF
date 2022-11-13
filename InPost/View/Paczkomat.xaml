@@ -3,26 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:InPost.View" xmlns:viewmodels="clr-namespace:InPost.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
+             xmlns:local="clr-namespace:InPost.View" xmlns:viewmodels="clr-namespace:InPost.ViewModels"
              xmlns:local1="clr-namespace:ValueConverters"  
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <UserControl.Resources>
-        <local1:ItemsLimiter x:Key="itemslimiter"></local1:ItemsLimiter>
-    </UserControl.Resources>
-    <Grid Background="White">
-        <TextBlock Text="Paczkomat nr1" Margin="340,137,340,263" TextAlignment="Center"/>
-        <Button x:Name="NadajPaczke" Height="40" Width="120"   
-            Content="Nadaj paczke" Margin="270,197,400,197" Command="{Binding NadajPaczkeCommand}">
-        </Button>
-        <Button x:Name="OdbierzPaczke" Height="40" Width="120"   
-            Content="Odbierz paczke" Margin="415,205,265,205" Command="{Binding OdbierzPaczkeCommand}"/>
+             d:DesignHeight="600" d:DesignWidth="400">
 
-        <ItemsControl ItemsSource="{Binding Paczkomat.History,Converter={StaticResource itemslimiter}}" Margin="275,265,265,10" RenderTransformOrigin="0.5,0.5">
+
+    <Grid Background="White">
+        <TextBlock Text="{Binding Paczkomat.Text}" TextAlignment="Center" Margin="100,10,100,540" Width="200" Height="50"/>
+        <Button x:Name="NadajPaczke"   Width="150" Height="50"
+            Content="Nadaj paczke"  Command="{Binding NadajPaczkeCommand}" Margin="220,69,30,481">
+        </Button>
+
+        <Button x:Name="OdbierzPaczke"   Width="150" Height="50"
+            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="30,69,220,481"  />
+
+        <ItemsControl ItemsSource="{Binding Paczkomat.History}"  RenderTransformOrigin="0.5,0.5" Margin="10,200,10,62">
             <ItemsControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
-                        <local:Operacja />
+                        <local:Operacja/>
                     </StackPanel>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>

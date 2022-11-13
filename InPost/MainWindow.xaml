@@ -5,14 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:InPost.ViewModels" xmlns:local="clr-namespace:InPost.View" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="1080">
-    <ItemsControl ItemsSource="{Binding SiecPaczkomatow}" Margin="65,89,104,66">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate>
-                <StackPanel>
-                    <local:Paczkomat />
-                </StackPanel>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>
+        Title="MainWindow" >
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+            <ColumnDefinition ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <local:Paczkomat DataContext="{Binding SiecPaczkomatow[0]}"  Grid.Column="0"/>
+        <local:Paczkomat DataContext="{Binding SiecPaczkomatow[1]}"  Grid.Column="1"/>
+        <local:Paczkomat DataContext="{Binding SiecPaczkomatow[2]}"  Grid.Column="2"/>
+    </Grid>
 </Window>

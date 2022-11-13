@@ -36,11 +36,11 @@ namespace InPost.Model
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        string text = "PaczkomatNr1";
+        string text = "PaczkomatNr";
         public int IleOperacjiPokazac => Math.Min(History.Count, 3);
         public string Text
         {
-            get { return text; }
+            get { return text+_nrPaczkomatu as string; }
             set
             {
                 text = value;
@@ -93,6 +93,7 @@ namespace InPost.Model
             {
                 y = (Odebranie)x;
             }
+            //Random rnd = new Random();
             await Task.Delay(200);
             History.Insert(0, new OperacjaViewModel(_nrPaczkomatu, x));
         }

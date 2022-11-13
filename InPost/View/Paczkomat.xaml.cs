@@ -24,5 +24,6 @@ namespace InPost.View
         {
             InitializeComponent();
         }
+
     }
 }

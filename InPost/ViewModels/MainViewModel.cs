@@ -20,7 +20,9 @@ namespace InPost.ViewModels
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand NadajPaczkeCommand { get; set; }
         public ICommand OdbierzPaczkeCommand { get; set; }
-        public Paczkomat PaczkomatMain { get; set; }
+        public Paczkomat Paczkomat1 { get; set; }
+        public Paczkomat Paczkomat2 { get; set; }
+        public Paczkomat Paczkomat3 { get; set; }
         Task ZadanieZKolejki;
         SynchronizationContext uiContext;
         public ObservableCollection<OperacjaViewModel> MainHistory { get; set; }
@@ -35,10 +37,12 @@ namespace InPost.ViewModels
             Text = "Paczkomat!!!";
             MainHistory = new ObservableCollection<OperacjaViewModel>();
             SiecPaczkomatow = new ObservableCollection<PaczkomatViewModel>();
-            PaczkomatMain = new Paczkomat(1);
-            SiecPaczkomatow.Add(new PaczkomatViewModel(PaczkomatMain));
-            ZadanieZKolejki = new Task(() => PaczkomatMain.ObsluzInteresanta());
-            
+            Paczkomat1 = new Paczkomat(1);
+            SiecPaczkomatow.Add(new PaczkomatViewModel(Paczkomat1));
+            Paczkomat2 = new Paczkomat(2);
+            SiecPaczkomatow.Add(new PaczkomatViewModel(Paczkomat2));
+            Paczkomat3 = new Paczkomat(3);
+            SiecPaczkomatow.Add(new PaczkomatViewModel(Paczkomat3));
             //ZadanieZKolejki = new Task(() => PaczkomatMain.ObsluzInteresanta());
             //ZadanieZKolejki.Start();
         }
