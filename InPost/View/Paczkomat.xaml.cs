@@ -1,4 +1,6 @@
-﻿using System;
+﻿using InPost.Model;
+using InPost.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using InPost.ViewModels;
 namespace InPost.View
 {
     /// <summary>
@@ -20,9 +22,13 @@ namespace InPost.View
     /// </summary>
     public partial class Paczkomat : UserControl
     {
+        private readonly PaczkomatViewModel viewModel;
+        public InPost.Model.Paczkomat Paczkomat1 { get; set; }
         public Paczkomat()
         {
             InitializeComponent();
+            Paczkomat1 = new InPost.Model.Paczkomat(8);
+            DataContext = new PaczkomatViewModel(Paczkomat1);
         }
 
     }

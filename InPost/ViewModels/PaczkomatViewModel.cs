@@ -11,6 +11,7 @@ using System.Threading;
 using System.Windows.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.ObjectModel;
 
 namespace InPost.ViewModels
 {
@@ -25,6 +26,14 @@ namespace InPost.ViewModels
         }
         SynchronizationContext uiContext;
         public Paczkomat Paczkomat { get; set; }
+        public string TEST = "TEST";
+        public class DataObject
+        {
+            public int A { get; set; }
+            public int B { get; set; }
+            public int C { get; set; }
+        }
+        public ObservableCollection<DataObject> list;
         public int IleOperacjiPokazac => Math.Min(Paczkomat.History.Count, 4);
         public PaczkomatViewModel(Paczkomat paczkomat)
         {
@@ -32,6 +41,12 @@ namespace InPost.ViewModels
             NadajPaczkeCommand = new RelayCommand(o => NadajPaczkeClick("Nadałeś paczkę!"));
             OdbierzPaczkeCommand = new RelayCommand(o => OdbierzPaczkeClick("Odebrałeś paczkę!"));
             uiContext = SynchronizationContext.Current;
+
+            var list = new ObservableCollection<DataObject>();
+            list.Add(new DataObject() { A = 6, B = 7, C = 5 });
+            list.Add(new DataObject() { A = 5, B = 8, C = 4 });
+            list.Add(new DataObject() { A = 4, B = 3, C = 0 });
+
         }
         private async void NadajPaczkeClick(object sender)
         {
@@ -65,5 +80,6 @@ namespace InPost.ViewModels
             //MainHistory = PaczkomatMain.History;
 
         }
+
     }
 }

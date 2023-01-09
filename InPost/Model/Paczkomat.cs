@@ -26,11 +26,11 @@ namespace InPost.Model
     public class Paczkomat : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
-        const int MAXSIZE = 64;
+        const int MAXSIZE = 32;
         private int _pos = 0;
         private int _nrPaczkomatu;
         public ConcurrentQueue<IOperacja> Q;
-        private Komorka[] K;
+        private Komorka[] K { get; }
         public ObservableCollection<OperacjaViewModel> History { get; set; }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -84,6 +84,7 @@ namespace InPost.Model
         public async void ObsluzInteresanta()
         {
             IOperacja x,y;
+            await Task.Delay(200);
             Q.TryDequeue(out x);
             if(x is Nadanie)
             {
@@ -94,7 +95,6 @@ namespace InPost.Model
                 y = (Odebranie)x;
             }
             //Random rnd = new Random();
-            await Task.Delay(200);
             History.Insert(0, new OperacjaViewModel(_nrPaczkomatu, x));
         }
         public void UstawDoKolejki(IOperacja interesant)

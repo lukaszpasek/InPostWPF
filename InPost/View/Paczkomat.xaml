@@ -4,29 +4,45 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:InPost.View" xmlns:viewmodels="clr-namespace:InPost.ViewModels"
-             xmlns:local1="clr-namespace:ValueConverters"  
+             xmlns:local1="clr-namespace:ValueConverters" d:DataContext="{d:DesignInstance Type=viewmodels:PaczkomatViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="400">
 
 
     <Grid Background="White">
-        <TextBlock Text="{Binding Paczkomat.Text}" TextAlignment="Center" Margin="100,10,100,540" Width="200" Height="50"/>
-        <Button x:Name="NadajPaczke"   Width="150" Height="50"
-            Content="Nadaj paczke"  Command="{Binding NadajPaczkeCommand}" Margin="220,69,30,481">
-        </Button>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition ></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        
+       
+        <GroupBox Margin="0,137,0,0" Grid.RowSpan="2">
+            <Grid Margin="15,0,3,0" Height="374">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="109*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="6*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="{Binding Paczkomat.Text}" TextAlignment="Center" Margin="83,-61,75,385" Width="200" Height="50" Grid.ColumnSpan="2"/>
+                <Button x:Name="NadajPaczke"
+            Content="Nadaj paczke"  Command="{Binding NadajPaczkeCommand}" Margin="0,24,10,272" Grid.ColumnSpan="2" Grid.Column="1" />
 
-        <Button x:Name="OdbierzPaczke"   Width="150" Height="50"
-            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="30,69,220,481"  />
+                <Button x:Name="OdbierzPaczke"
+            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="10,24,50,272"  />
 
-        <ItemsControl ItemsSource="{Binding Paczkomat.History}"  RenderTransformOrigin="0.5,0.5" Margin="10,200,10,62">
-            <ItemsControl.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel>
-                        <local:Operacja/>
-                    </StackPanel>
-                </DataTemplate>
-            </ItemsControl.ItemTemplate>
-        </ItemsControl>
-
+                <ItemsControl ItemsSource="{Binding Paczkomat.History}" Width="300"  Margin="35,166,23,-31" Grid.ColumnSpan="2">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <local:Operacja/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>

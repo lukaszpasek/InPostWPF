@@ -21,6 +21,7 @@ namespace InPost.Model
         double _height;
         bool _czy_zajeta;
         Paczka _paczka;
+        public bool CzyZajeta => _czy_zajeta;
         public Komorka()
         {
         }
