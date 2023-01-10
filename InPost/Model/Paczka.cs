@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InPost.Helpers.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,6 +40,22 @@ namespace InPost.Model
             _imieOdbiorcy = imieOdbiorcy;
             _nazwiskoOdbiorcy = nazwiskoOdbiorcy;
             _numerPaczki = numerPaczki;
+        }
+        public Paczka()
+        {
+            DialogOperacja inputDialog = new DialogOperacja("Podaj imie i nazwisko nadawcy:","Podaj imie i nazwisko adresata:","Jan Kowalski", "Jan Nowak");
+            if (inputDialog.ShowDialog() == true && inputDialog.Answer1!="" && inputDialog.Answer2!="")
+            {
+                _imieNadawcy = inputDialog.Answer1.Substring(0, inputDialog.Answer1.IndexOf(' '));
+                _nazwiskoNadawcy = inputDialog.Answer1.Substring(inputDialog.Answer1.IndexOf(' ')+1);
+                _imieOdbiorcy = inputDialog.Answer2.Substring(0, inputDialog.Answer2.IndexOf(' '));
+                _nazwiskoOdbiorcy = inputDialog.Answer2.Substring(inputDialog.Answer2.IndexOf(' ') + 1);
+                if(_imieNadawcy=="" || _nazwiskoNadawcy=="" || _imieOdbiorcy=="" || _nazwiskoOdbiorcy=="")
+                {
+                    MessageBox.Show("Nieprawidlowe dane!");
+                    return;
+                }
+            }
         }
         public int NumerPaczki => _numerPaczki;
     }

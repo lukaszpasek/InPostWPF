@@ -12,6 +12,7 @@ using System.Windows.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using InPost.Helpers.View;
 
 namespace InPost.ViewModels
 {
@@ -50,16 +51,24 @@ namespace InPost.ViewModels
         }
         private async void NadajPaczkeClick(object sender)
         {
-            Paczka x = new Paczka("Łukasz", "Pasek", "Mateusz", "Pasek", 222);
+            Paczka x = new Paczka();
             Nadanie y = new Nadanie(x, 1);
+
             //SiecPaczkomatow.UstawDoKolejki(y);
-            Paczkomat.UstawDoKolejki(y);
-            //ZadanieZKolejki.Start();
+            if (x.ImieNadawcy is not null && x.NazwiskoNadawcy is not null && x.ImieOdbiorcy is not null && x.NazwiskoOdbiorcy is not null)
+            {
+                Paczkomat.UstawDoKolejki(y);
+                //ZadanieZKolejki.Start();
 
-            //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
+                //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
 
-            MessageBox.Show(sender.ToString());
-            uiContext.Post(x => Paczkomat.ObsluzInteresanta(), null);
+                MessageBox.Show(sender.ToString());
+                uiContext.Post(x => Paczkomat.ObsluzInteresanta(), null);
+            }
+            else
+            {
+                MessageBox.Show("Nieprawidlowe dane!");
+            }
             //PaczkomatMain.History.Add(new OperacjaViewModel(1, y));
             //MainHistory.Add(new OperacjaViewModel(1, y));
             //MainHistory = PaczkomatMain.History;

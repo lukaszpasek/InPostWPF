@@ -8,7 +8,9 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="400">
 
-
+    
+    
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition></RowDefinition>
@@ -31,7 +33,7 @@
             Content="Nadaj paczke"  Command="{Binding NadajPaczkeCommand}" Margin="0,24,10,272" Grid.ColumnSpan="2" Grid.Column="1" />
 
                 <Button x:Name="OdbierzPaczke"
-            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="10,24,50,272"  />
+            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="10,24,68,272"  />
 
                 <ItemsControl ItemsSource="{Binding Paczkomat.History}" Width="300"  Margin="35,166,23,-31" Grid.ColumnSpan="2">
                     <ItemsControl.ItemTemplate>
