@@ -51,8 +51,8 @@ namespace InPost.ViewModels
         }
         private async void NadajPaczkeClick(object sender)
         {
-            Paczka x = new Paczka();
-            Nadanie y = new Nadanie(x, 1);
+            Paczka x = new Paczka(true);
+            Nadanie y = new Nadanie(x, Paczkomat.NrPaczkomatu);
 
             //SiecPaczkomatow.UstawDoKolejki(y);
             if (x.ImieNadawcy is not null && x.NazwiskoNadawcy is not null && x.ImieOdbiorcy is not null && x.NazwiskoOdbiorcy is not null)
@@ -62,10 +62,14 @@ namespace InPost.ViewModels
 
                 //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
 
+                var myTask = Task.Run(() => Paczkomat.ObsluzInteresanta());
+                bool pom = await myTask;
+                if (!pom) { MessageBox.Show("Nie można nadać paczki.Paczkomat Pełny!"); return; }
                 MessageBox.Show(sender.ToString());
-                uiContext.Post(x => Paczkomat.ObsluzInteresanta(), null);
+                Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, y));
+                Paczkomat.PaczkiDoOdebrania.Add(y.Paczka);
             }
-            else
+            else if(x !=null)
             {
                 MessageBox.Show("Nieprawidlowe dane!");
             }
@@ -75,7 +79,7 @@ namespace InPost.ViewModels
         }
         private async void OdbierzPaczkeClick(object sender)
         {
-            Odebranie y = new Odebranie(222, 2);
+            Odebranie y = new Odebranie(Paczkomat.NrPaczkomatu);
             Paczkomat.UstawDoKolejki(y);
 
             // while (!PaczkomatMain.Q.IsEmpty)
@@ -84,8 +88,14 @@ namespace InPost.ViewModels
             //}
             //ZadanieZKolejki.Start();
             //if (PaczkomatMain.Q.IsEmpty) ZadanieZKolejki.Wait();
+            var myTask = Task.Run(() => Paczkomat.ObsluzInteresanta());
+            bool pom = await myTask;
+            if (!Paczkomat.OtwarteKomorki.Exists(x => x.NumerPaczki == y.NumerPaczki)) { MessageBox.Show("Nie ma takiej paczki!"); return; }
+            Paczka x = Paczkomat.OtwarteKomorki.Find(x => x.NumerPaczki == y.NumerPaczki);
+            Paczkomat.OtwarteKomorki.RemoveAt(Paczkomat.OtwarteKomorki.FindIndex(x => x.NumerPaczki == y.NumerPaczki));
             MessageBox.Show(sender.ToString());
-            uiContext.Post(x => Paczkomat.ObsluzInteresanta(), null);
+            Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, y));
+            Paczkomat.PaczkiDoOdebrania.Remove(x);
             //MainHistory = PaczkomatMain.History;
 
         }

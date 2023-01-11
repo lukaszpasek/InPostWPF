@@ -10,6 +10,9 @@ namespace InPost.Model
     {
         private Paczka _paczka;
         private int _ktoryPaczkomat;
+        public int DoKtoregoPaczkomatu=>_ktoryPaczkomat;
+
+        public Paczka Paczka=> _paczka;
         public Nadanie(Paczka paczkaDoNadania,int gdzieNadajemy)
         {
             _paczka = paczkaDoNadania;

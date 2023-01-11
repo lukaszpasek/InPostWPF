@@ -43,6 +43,11 @@ namespace InPost.ViewModels
             SiecPaczkomatow.Add(new PaczkomatViewModel(Paczkomat2));
             Paczkomat3 = new Paczkomat(3);
             SiecPaczkomatow.Add(new PaczkomatViewModel(Paczkomat3));
+
+            SiecPaczkomatow[0].Paczkomat.SiecPaczkomatow = SiecPaczkomatow;
+            SiecPaczkomatow[1].Paczkomat.SiecPaczkomatow = SiecPaczkomatow;
+            SiecPaczkomatow[2].Paczkomat.SiecPaczkomatow = SiecPaczkomatow;
+
             //ZadanieZKolejki = new Task(() => PaczkomatMain.ObsluzInteresanta());
             //ZadanieZKolejki.Start();
         }

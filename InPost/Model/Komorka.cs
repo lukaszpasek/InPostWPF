@@ -24,6 +24,7 @@ namespace InPost.Model
         public bool CzyZajeta => _czy_zajeta;
         public Komorka()
         {
+            _paczka = new Paczka();
         }
         public bool Wrzuc(Paczka paczkaDoNadania)
         {
@@ -48,10 +49,13 @@ namespace InPost.Model
                     _czy_zajeta = false;
                     tmp = _paczka;
                     _paczka = null;
+                    return tmp;
                 }
                 return _paczka;
             }
         }
+        public int NumerPaczki => _paczka.NumerPaczki;
+        public Paczka Paczka => _paczka;
     }
 }
 

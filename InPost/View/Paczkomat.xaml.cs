@@ -27,7 +27,6 @@ namespace InPost.View
         public Paczkomat()
         {
             InitializeComponent();
-            Paczkomat1 = new InPost.Model.Paczkomat(8);
             DataContext = new PaczkomatViewModel(Paczkomat1);
         }
 

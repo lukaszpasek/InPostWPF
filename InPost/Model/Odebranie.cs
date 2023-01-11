@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InPost.Helpers.View;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,10 +11,19 @@ namespace InPost.Model
     {
         private int _numerPaczki;
         private int _ktoryPaczkomat;
-        public int NumerPaczki { get => _numerPaczki; }
+        public int NumerPaczki { get => _numerPaczki;}
         public Odebranie(int numerPaczki, int gdzieOdbieramy)
         {
             _numerPaczki = numerPaczki;
+            _ktoryPaczkomat = gdzieOdbieramy;
+        }
+        public Odebranie(int gdzieOdbieramy)
+        {
+            DialogOdebranie inputDialog = new DialogOdebranie("Podaj numer paczki", "9999");
+            if (inputDialog.ShowDialog() == true && inputDialog.Answer != null)
+            {
+                _numerPaczki = inputDialog.Answer;
+            }
             _ktoryPaczkomat = gdzieOdbieramy;
         }
         public int KtoryPaczkomat =>_ktoryPaczkomat;

@@ -1,0 +1,27 @@
+﻿<Window x:Class="InPost.Helpers.View.DialogOdebranie"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="PaczkomatOperacja" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
+        ContentRendered="Window_ContentRendered" MinHeight="240" Width="413">
+
+    <Grid Margin="15">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Image Source="/WpfTutorialSamples;component/Images/question32.png" Width="32" Height="32" Grid.RowSpan="2" Margin="20,6,20,6" />
+
+        <Label Name="lblQuestion" Grid.Column="1" Margin="0,0,0,18" Grid.RowSpan="2">Question:</Label>
+        <TextBox Name="txtAnswer" Grid.Column="1" Grid.Row="1" MinWidth="250">Answer</TextBox>
+
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Right" Margin="0,15,0,0" Grid.Column="1"/>
+        <Button IsDefault="True" x:Name="btnDialogOk" Click="btnDialogOk_Click" Width="60" Margin="174,65,77,-60" Grid.Column="1" Content="_Ok" Grid.Row="2"/>
+        <Button IsCancel="True" Width="60" Grid.Column="1" Content="_Cancel" Margin="244,65,7,-60" Grid.Row="2"/>
+    </Grid>
+</Window>
