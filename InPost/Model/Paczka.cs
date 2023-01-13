@@ -47,7 +47,7 @@ namespace InPost.Model
         }
         public Paczka(bool startDialog)
         {
-            DialogOperacja inputDialog = new DialogOperacja("Podaj imie i nazwisko nadawcy:", "Podaj imie i nazwisko adresata:", "Jan Kowalski", "Jan Nowak");
+            /*DialogOperacja inputDialog = new DialogOperacja("Podaj imie i nazwisko nadawcy:", "Podaj imie i nazwisko adresata:", "Jan Kowalski", "Jan Nowak");
             if (inputDialog.ShowDialog() == true && inputDialog.Answer1.Contains(" ") && inputDialog.Answer2.Contains(" "))
             {
                 _imieNadawcy = inputDialog.Answer1.Substring(0, inputDialog.Answer1.IndexOf(' '));
@@ -60,6 +60,15 @@ namespace InPost.Model
                     return;
                 }
             }
+            else
+            {
+                MessageBox.Show("Niepowodzenie utworzenia paczki!");
+                return;
+            }*/
+            _imieNadawcy = "test";
+            _imieOdbiorcy = "test";
+            _nazwiskoNadawcy = "test";
+            _nazwiskoOdbiorcy = "test";
         }
         public int NumerPaczki { get; set; }
     }

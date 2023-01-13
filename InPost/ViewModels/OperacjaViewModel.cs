@@ -20,6 +20,10 @@ namespace InPost.ViewModels
                 {
                     return "Nadanie";
                 }
+                else if (Operacja is Dostarczenie)
+                {
+                    return "Nadanie";
+                }
                 else
                 {
                     return "Odebranie";

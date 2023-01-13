@@ -61,7 +61,7 @@ namespace InPost.Model
             PaczkiDoOdebrania = new ObservableCollection<Paczka>();
             History = new ObservableCollection<OperacjaViewModel>();
         }
-        private bool NadajPaczke(Paczka paczkaDoNadania)
+        private bool ZaladujPaczke(Paczka paczkaDoNadania)
         {
             if (_pos < MAXSIZE)
             {
@@ -99,12 +99,14 @@ namespace InPost.Model
         public bool ObsluzInteresanta()
         {
             IOperacja x;
-            Task.Delay(200);
+            //Task.Delay(50000);
             Q.TryDequeue(out x);
-            if (x is Nadanie)
+            if (x is Dostarczenie)
             {
-                Nadanie y = (Nadanie)x;
-                return SiecPaczkomatow[y.DoKtoregoPaczkomatu - 1].Paczkomat.NadajPaczke(y.Paczka);
+                Dostarczenie y = (Dostarczenie)x;
+              
+                return this.ZaladujPaczke(y.Paczka);
+
             }
             else
             {

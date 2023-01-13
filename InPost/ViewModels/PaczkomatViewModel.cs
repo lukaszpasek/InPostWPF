@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using InPost.Helpers.View;
+using System.Diagnostics;
 
 namespace InPost.ViewModels
 {
@@ -52,22 +53,35 @@ namespace InPost.ViewModels
         private async void NadajPaczkeClick(object sender)
         {
             Paczka x = new Paczka(true);
-            Nadanie y = new Nadanie(x, Paczkomat.NrPaczkomatu);
+            if (Paczkomat.NrPaczkomatu == 2)
+            {
+                Paczkomat.SiecPaczkomatow[0].NadajPaczkeClick("Nadałeś paczkę!");
+                //Paczkomat.SiecPaczkomatow[2].NadajPaczkeClick("Nadałeś paczkę!");
+            }
+
+            int doKtoregoPaczkomatu = 0;
+            //Debug.WriteLine(x.NazwiskoOdbiorcy[0]);
+            if (x.NazwiskoOdbiorcy is null) return;
+            if (x.NazwiskoOdbiorcy[0] < 'K') doKtoregoPaczkomatu = 1;
+            else if (x.NazwiskoOdbiorcy[0] >= 'K' && x.NazwiskoOdbiorcy[0] < 'S') doKtoregoPaczkomatu = 2;
+            else doKtoregoPaczkomatu = 3;
+            Dostarczenie y = new Dostarczenie(x);
 
             //SiecPaczkomatow.UstawDoKolejki(y);
             if (x.ImieNadawcy is not null && x.NazwiskoNadawcy is not null && x.ImieOdbiorcy is not null && x.NazwiskoOdbiorcy is not null)
             {
-                Paczkomat.UstawDoKolejki(y);
+                Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.UstawDoKolejki(y);
+                
                 //ZadanieZKolejki.Start();
 
                 //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
 
-                var myTask = Task.Run(() => Paczkomat.ObsluzInteresanta());
+                var myTask = Task.Run(() => Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.ObsluzInteresanta());
                 bool pom = await myTask;
                 if (!pom) { MessageBox.Show("Nie można nadać paczki.Paczkomat Pełny!"); return; }
                 MessageBox.Show(sender.ToString());
                 Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, y));
-                Paczkomat.PaczkiDoOdebrania.Add(y.Paczka);
+                Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.PaczkiDoOdebrania.Add(y.Paczka);
             }
             else if(x !=null)
             {
