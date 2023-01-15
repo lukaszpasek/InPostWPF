@@ -22,7 +22,7 @@ namespace InPost.ViewModels
                 }
                 else if (Operacja is Dostarczenie)
                 {
-                    return "Nadanie";
+                    return "Dostarczenie";
                 }
                 else
                 {

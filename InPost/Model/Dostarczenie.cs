@@ -14,5 +14,10 @@ namespace InPost.Model
         {
             _paczka = paczkaDoDostarczenia;
         }
+
+        public string Nazwa => "Dostarczenie";
+        public int NumerPaczki => _paczka.NumerPaczki;
+
+        public string OperacjaName => "Dostarczenie: " + _paczka.NumerPrzewozowy.ToString();
     }
 }

@@ -1,4 +1,5 @@
-﻿using InPost.Model;
+﻿using InPost.Helpers.View;
+using InPost.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,6 +24,8 @@ namespace InPost.ViewModels
         public Paczkomat Paczkomat1 { get; set; }
         public Paczkomat Paczkomat2 { get; set; }
         public Paczkomat Paczkomat3 { get; set; }
+        public int IleKurierow { get; set; }
+        public int IleKlientow { get; set; }
         Task ZadanieZKolejki;
         SynchronizationContext uiContext;
         public ObservableCollection<OperacjaViewModel> MainHistory { get; set; }
@@ -35,6 +38,18 @@ namespace InPost.ViewModels
         public MainViewModel()
         {
             Text = "Paczkomat!!!";
+            DialogOperacja inputDialog = new DialogOperacja("Podaj ile kurierow:", "Podaj ile klientow:", "5", "5");
+            if (inputDialog.ShowDialog() == true && inputDialog.Answer1 is not null && inputDialog.Answer2 is not null)
+            {
+                IleKurierow = Int32.Parse(inputDialog.Answer1);
+                IleKlientow = Int32.Parse(inputDialog.Answer2);
+            }
+            else
+            {
+                MessageBox.Show("Niepowodzenie utworzenia paczki!");
+                return;
+            }
+
             MainHistory = new ObservableCollection<OperacjaViewModel>();
             SiecPaczkomatow = new ObservableCollection<PaczkomatViewModel>();
             Paczkomat1 = new Paczkomat(1);
@@ -48,10 +63,11 @@ namespace InPost.ViewModels
             SiecPaczkomatow[1].Paczkomat.SiecPaczkomatow = SiecPaczkomatow;
             SiecPaczkomatow[2].Paczkomat.SiecPaczkomatow = SiecPaczkomatow;
 
+            
             //ZadanieZKolejki = new Task(() => PaczkomatMain.ObsluzInteresanta());
             //ZadanieZKolejki.Start();
         }
 
-        
+
     }
 }

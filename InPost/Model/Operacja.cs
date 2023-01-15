@@ -8,5 +8,9 @@ namespace InPost.Model
 {
     public interface IOperacja
     {
+        public string Nazwa { get; }
+        public int NumerPaczki { get; }
+
+        public string OperacjaName { get; }
     }
 }

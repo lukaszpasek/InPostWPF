@@ -36,7 +36,7 @@ namespace InPost.Model
         public ObservableCollection<OperacjaViewModel> History { get; set; }
         public ObservableCollection<Paczka> PaczkiDoOdebrania { get; set; }
         public ObservableCollection<PaczkomatViewModel> SiecPaczkomatow { get; set; }
-
+        public ObservableCollection<IOperacja> KlienciWKolejce { get; set; }
         public List<Paczka> OtwarteKomorki { get; }
         private void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {
@@ -60,6 +60,7 @@ namespace InPost.Model
             OtwarteKomorki = new List<Paczka>();
             PaczkiDoOdebrania = new ObservableCollection<Paczka>();
             History = new ObservableCollection<OperacjaViewModel>();
+            KlienciWKolejce = new ObservableCollection<IOperacja>();
         }
         private bool ZaladujPaczke(Paczka paczkaDoNadania)
         {
@@ -99,21 +100,31 @@ namespace InPost.Model
         public bool ObsluzInteresanta()
         {
             IOperacja x;
-            //Task.Delay(50000);
+            
             Q.TryDequeue(out x);
+            //View.this.SiecPaczkomatow[0].Paczkomat.KlienciWKolejce.Remove(x);
+            
+            
             if (x is Dostarczenie)
             {
                 Dostarczenie y = (Dostarczenie)x;
-              
+                Thread.Sleep(5000);
                 return this.ZaladujPaczke(y.Paczka);
 
             }
-            else
+            else if(x is Odebranie)
             {
                 Odebranie y = (Odebranie)x;
+                Thread.Sleep(1000);
                 Paczka tmp = OdbierzPaczke(y.NumerPaczki);
                 if (tmp is not null)  OtwarteKomorki.Add(tmp);
                 else return false;
+            }
+            else
+            {
+                Nadanie y = (Nadanie)x;
+                Thread.Sleep(1000);
+                return true;
             }
             //Random rnd = new Random();
             //History.Insert(0, new OperacjaViewModel(_nrPaczkomatu, x));
@@ -122,6 +133,7 @@ namespace InPost.Model
         public void UstawDoKolejki(IOperacja interesant)
         {
             Q.Enqueue(interesant);
+            KlienciWKolejce.Add(interesant);
         }
     }
 }

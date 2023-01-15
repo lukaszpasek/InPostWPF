@@ -27,5 +27,9 @@ namespace InPost.Model
             _ktoryPaczkomat = gdzieOdbieramy;
         }
         public int KtoryPaczkomat =>_ktoryPaczkomat;
+        public string Nazwa => "Odebranie";
+
+        public string OperacjaName => "Odebranie: " + _numerPaczki.ToString();
+
     }
 }

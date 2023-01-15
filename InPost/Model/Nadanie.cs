@@ -18,5 +18,8 @@ namespace InPost.Model
             _paczka = paczkaDoNadania;
             _ktoryPaczkomat = gdzieNadajemy;
         }
+        public string Nazwa => "Nadanie";
+        public int NumerPaczki => _paczka.NumerPaczki;
+        public string OperacjaName => "Nadanie: " + _paczka.NumerPrzewozowy.ToString();
     }
 }

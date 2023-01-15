@@ -26,7 +26,7 @@ namespace InPost.Model
         private string _imieNadawcy;
         private string _nazwiskoOdbiorcy;
         private string _imieOdbiorcy;
-
+        private int _numerPrzewozowy;
         public string ImieNadawcy => _imieNadawcy;
         public string NazwiskoNadawcy => _nazwiskoNadawcy;
 
@@ -40,6 +40,8 @@ namespace InPost.Model
             _imieOdbiorcy = imieOdbiorcy;
             _nazwiskoOdbiorcy = nazwiskoOdbiorcy;
             _numerPaczki = numerPaczki;
+            Random rnd = new Random();
+            _numerPrzewozowy = rnd.Next(1000, 9999);
         }
         public Paczka()
         {
@@ -69,8 +71,11 @@ namespace InPost.Model
             _imieOdbiorcy = "test";
             _nazwiskoNadawcy = "test";
             _nazwiskoOdbiorcy = "test";
+            Random rnd = new Random();
+            _numerPrzewozowy = rnd.Next(1000, 9999);
         }
         public int NumerPaczki { get; set; }
+        public int NumerPrzewozowy => _numerPrzewozowy;
     }
 }
 
