@@ -17,7 +17,7 @@ namespace InPost.Model
 
         public string Nazwa => "Dostarczenie";
         public int NumerPaczki => _paczka.NumerPaczki;
-
+        public int IdZlecenia { get; set; }
         public string OperacjaName => "Dostarczenie: " + _paczka.NumerPrzewozowy.ToString();
     }
 }

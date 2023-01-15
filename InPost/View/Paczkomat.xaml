@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:InPost.View" xmlns:viewmodels="clr-namespace:InPost.ViewModels"
              xmlns:local1="clr-namespace:ValueConverters" d:DataContext="{d:DesignInstance Type=viewmodels:PaczkomatViewModel}"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="400">
+             d:DesignHeight="720" d:DesignWidth="400">
 
 
 
@@ -24,18 +24,22 @@
         <GroupBox Grid.RowSpan="2" RenderTransformOrigin="0.495,0.375">
             <Grid Margin="10,0,8,0" Height="358">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="81*"/>
-                    <ColumnDefinition Width="56"/>
-                    <ColumnDefinition Width="70*"/>
-                    <ColumnDefinition Width="6*"/>
+                    <ColumnDefinition Width="37*"/>
+                    <ColumnDefinition Width="72*"/>
+                    <ColumnDefinition Width="21*"/>
+                    <ColumnDefinition Width="26"/>
+                    <ColumnDefinition Width="67*"/>
+                    <ColumnDefinition Width="73*"/>
+                    <ColumnDefinition Width="62*"/>
+                    <ColumnDefinition Width="12*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="{Binding Paczkomat.Text}" TextAlignment="Center" Margin="89,-140,69,385" Width="200" Grid.ColumnSpan="3"/>
+                <TextBlock Text="{Binding Paczkomat.Text}" TextAlignment="Center" Margin="52,-140,7,385" Width="200" Grid.ColumnSpan="5" Grid.Column="1"/>
                 <Button x:Name="NadajPaczke"
-            Content="Nadaj paczke"  Command="{Binding NadajPaczkeCommand}" Margin="10,-89,15,385" Grid.Column="2"  />
+            Content="Nadaj paczke"  Command="{Binding NadajPaczkeCommand}" Margin="10,-89,15,385" Grid.Column="5" Grid.ColumnSpan="2"  />
 
                 <Button x:Name="OdbierzPaczke"
-            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="8,-89,42,385" />
-                <ItemsControl ItemsSource="{Binding Paczkomat.KlienciWKolejce}"  Margin="10,0,15,259"  Grid.ColumnSpan="3">
+            Content="Odbierz paczke"  Command="{Binding OdbierzPaczkeCommand}"  Margin="8,-89,15,385" Grid.ColumnSpan="3" />
+                <ItemsControl ItemsSource="{Binding Paczkomat.KlienciWKolejce}"  Margin="10,10,15,249"  Grid.ColumnSpan="7">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -44,7 +48,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <ItemsControl ItemsSource="{Binding Paczkomat.History}"   Margin="10,156,10,28">
+                <ItemsControl ItemsSource="{Binding Paczkomat.History}"   Margin="10,156,10,28" Grid.ColumnSpan="4">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -53,8 +57,8 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <TextBlock Margin="10,130,-5,202" Grid.Column="2" Text="PaczkiGotoweDoOdebrania:" Grid.ColumnSpan="2"/>
-                <ItemsControl ItemsSource="{Binding Paczkomat.PaczkiDoOdebrania}"  Margin="10,156,0,-112" Grid.ColumnSpan="2" Grid.Column="2">
+                <TextBlock Margin="10,130,-5,202" Grid.Column="5" Text="PaczkiGotoweDoOdebrania:" Grid.ColumnSpan="3"/>
+                <ItemsControl ItemsSource="{Binding Paczkomat.PaczkiDoOdebrania}"  Margin="10,156,0,-178" Grid.ColumnSpan="3" Grid.Column="5">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <StackPanel>
@@ -63,7 +67,9 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
-                <TextBlock Margin="10,130,6,202"><Run Language="en-gb" Text="Historia:"/></TextBlock>
+                <TextBlock Margin="10,130,6,202" Grid.ColumnSpan="4"><Run Language="en-gb" Text="Historia:"/></TextBlock>
+                <TextBlock Margin="8,-16,8,354" Grid.ColumnSpan="4"><Run Language="en-gb" Text="KolejkaPrzedPaczkomatem:"/></TextBlock>
+                <TextBlock Margin="8,-16,0,340" Text="{Binding Paczkomat.IlePelnych, NotifyOnTargetUpdated=True}"  Grid.ColumnSpan="3" Grid.Column="5"/>
             </Grid>
         </GroupBox>
     </Grid>

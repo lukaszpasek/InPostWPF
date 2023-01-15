@@ -26,6 +26,10 @@ namespace InPost.ViewModels
         public Paczkomat Paczkomat3 { get; set; }
         public int IleKurierow { get; set; }
         public int IleKlientow { get; set; }
+
+        private int _ileZlecen = 0;
+        public int IleZlecen { get { return _ileZlecen; } set { _ileZlecen = value; } }
+
         Task ZadanieZKolejki;
         SynchronizationContext uiContext;
         public ObservableCollection<OperacjaViewModel> MainHistory { get; set; }

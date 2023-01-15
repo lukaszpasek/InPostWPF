@@ -19,16 +19,17 @@ namespace InPost.Model
         }
         public Odebranie(int gdzieOdbieramy)
         {
-            DialogOdebranie inputDialog = new DialogOdebranie("Podaj numer paczki", "9999");
-            if (inputDialog.ShowDialog() == true && inputDialog.Answer != null)
-            {
-                _numerPaczki = inputDialog.Answer;
-            }
+            //DialogOdebranie inputDialog = new DialogOdebranie("Podaj numer paczki", "9999");
+            //if (inputDialog.ShowDialog() == true && inputDialog.Answer != null)
+            //{
+            Random rnd = new Random();
+            _numerPaczki = rnd.Next(1,100);
+            //}
             _ktoryPaczkomat = gdzieOdbieramy;
         }
         public int KtoryPaczkomat =>_ktoryPaczkomat;
         public string Nazwa => "Odebranie";
-
+        public int IdZlecenia { get; set; }
         public string OperacjaName => "Odebranie: " + _numerPaczki.ToString();
 
     }

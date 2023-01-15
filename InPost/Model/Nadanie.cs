@@ -20,6 +20,7 @@ namespace InPost.Model
         }
         public string Nazwa => "Nadanie";
         public int NumerPaczki => _paczka.NumerPaczki;
+        public int IdZlecenia { get; set; }
         public string OperacjaName => "Nadanie: " + _paczka.NumerPrzewozowy.ToString();
     }
 }

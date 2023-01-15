@@ -27,6 +27,7 @@ namespace InPost.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+        
         SynchronizationContext uiContext;
         public Paczkomat Paczkomat { get; set; }
         public string TEST = "TEST";
@@ -42,28 +43,31 @@ namespace InPost.ViewModels
         public PaczkomatViewModel(Paczkomat paczkomat)
         {
             Paczkomat = paczkomat;
-            NadajPaczkeCommand = new RelayCommand(o => NadajPaczkeClick("Nadałeś paczkę!"));
-            OdbierzPaczkeCommand = new RelayCommand(o => OdbierzPaczkeClick("Odebrałeś paczkę!"));
+            NadajPaczkeCommand = new RelayCommand(o => AutoMode());
+            OdbierzPaczkeCommand = new RelayCommand(o => AutoMode());
             uiContext = SynchronizationContext.Current;
 
             var list = new ObservableCollection<DataObject>();
             list.Add(new DataObject() { A = 6, B = 7, C = 5 });
             list.Add(new DataObject() { A = 5, B = 8, C = 4 });
             list.Add(new DataObject() { A = 4, B = 3, C = 0 });
+      
 
         }
 
         public async void AutoMode()
         {
             Random rnd = new Random();
-            for(int i=0; i<10;i++)
+            for(int i=0; i<1000;i+=2)
             {
-                int nrPaczkomatu = rnd.Next(1, 3);
-                uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].NadajPaczkeClick("Nadałeś paczkę!"), null);
+                int nrPaczkomatu = rnd.Next(1, 4);
+                uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].NadajPaczkeClick("Nadałeś paczkę!",i), null);
+                nrPaczkomatu = rnd.Next(1, 4);
+                uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].OdbierzPaczkeClick("Odebrałeś paczkę!",i+1), null);
                 await Task.Delay(1000);
             }
         }
-        private async void NadajPaczkeClick(object sender)
+        private async void NadajPaczkeClick(object sender,int idZlecenia)
         {
             Paczka x = new Paczka(true);
             //Task.Run(() => Paczkomat.SiecPaczkomatow[1].AutoMode());
@@ -77,6 +81,7 @@ namespace InPost.ViewModels
             Nadanie _x = new Nadanie(x, doKtoregoPaczkomatu);
            
             Dostarczenie y = new Dostarczenie(x);
+            y.IdZlecenia = idZlecenia;
             //SiecPaczkomatow.UstawDoKolejki(y);
             if (x.ImieNadawcy is not null && x.NazwiskoNadawcy is not null && x.ImieOdbiorcy is not null && x.NazwiskoOdbiorcy is not null)
             {
@@ -89,11 +94,15 @@ namespace InPost.ViewModels
                 //Task.Run(() => PaczkomatMain.ObsluzInteresanta());
                 this.Paczkomat.KlienciWKolejce.Remove(_x);
                 Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, _x));
-                var myTask = Task.Run(() => Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.ObsluzInteresanta());
+                var myTask = Task.Run(() => Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.ObsluzInteresanta(y));
                 bool pom = await myTask;
                 
                 Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.KlienciWKolejce.Remove(y);
-                if (!pom) { MessageBox.Show("Nie można nadać paczki.Paczkomat Pełny!"); return; }
+                if (!pom) 
+                {
+                    // MessageBox.Show("Nie można nadać paczki.Paczkomat Pełny!");
+                    return; 
+                }
                 //MessageBox.Show(sender.ToString());
                 Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, y));
                 
@@ -107,23 +116,26 @@ namespace InPost.ViewModels
             //MainHistory.Add(new OperacjaViewModel(1, y));
             //MainHistory = PaczkomatMain.History;
         }
-        private async void OdbierzPaczkeClick(object sender)
+        private async void OdbierzPaczkeClick(object sender,int idZlecenia)
         {
             Odebranie y = new Odebranie(Paczkomat.NrPaczkomatu);
+            y.IdZlecenia = idZlecenia;
             Paczkomat.UstawDoKolejki(y);
-            uiContext.Post(x => Paczkomat.SiecPaczkomatow[1].AutoMode(), null);
-            uiContext.Post(x => Paczkomat.SiecPaczkomatow[0].AutoMode(), null);
             // while (!PaczkomatMain.Q.IsEmpty)
             //{
             //  uiContext.Send(x => PaczkomatMain.ObsluzInteresanta(), null);
             //}
             //ZadanieZKolejki.Start();
             //if (PaczkomatMain.Q.IsEmpty) ZadanieZKolejki.Wait();
-            var myTask = Task.Run(() => Paczkomat.ObsluzInteresanta());
+            var myTask = Task.Run(() => Paczkomat.ObsluzInteresanta(y));
             bool pom = await myTask;
             //Wait(10);
             Paczkomat.KlienciWKolejce.Remove(y);
-            if (!Paczkomat.OtwarteKomorki.Exists(x => x.NumerPaczki == y.NumerPaczki)) { MessageBox.Show("Nie ma takiej paczki!"); return; }
+            if (!Paczkomat.OtwarteKomorki.Exists(x => x.NumerPaczki == y.NumerPaczki)) 
+            { 
+               // MessageBox.Show("Nie ma takiej paczki!"); 
+                return; 
+            }
             Paczka x = Paczkomat.OtwarteKomorki.Find(x => x.NumerPaczki == y.NumerPaczki);
             Paczkomat.OtwarteKomorki.RemoveAt(Paczkomat.OtwarteKomorki.FindIndex(x => x.NumerPaczki == y.NumerPaczki));
             //MessageBox.Show(sender.ToString());

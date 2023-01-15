@@ -10,7 +10,7 @@ namespace InPost.Model
     {
         public string Nazwa { get; }
         public int NumerPaczki { get; }
-
+        public int IdZlecenia { get; }
         public string OperacjaName { get; }
     }
 }

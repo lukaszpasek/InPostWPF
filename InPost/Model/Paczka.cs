@@ -67,12 +67,19 @@ namespace InPost.Model
                 MessageBox.Show("Niepowodzenie utworzenia paczki!");
                 return;
             }*/
-            _imieNadawcy = "test";
-            _imieOdbiorcy = "test";
-            _nazwiskoNadawcy = "test";
-            _nazwiskoOdbiorcy = "test";
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789qwertyuiopasdfghjklzxcvbnm,.;'[`=+";
+            
+         
             Random rnd = new Random();
             _numerPrzewozowy = rnd.Next(1000, 9999);
+            _imieNadawcy = new string(Enumerable.Repeat(chars, 6)
+               .Select(s => s[rnd.Next(s.Length)]).ToArray());
+            _imieOdbiorcy = new string(Enumerable.Repeat(chars, 6)
+               .Select(s => s[rnd.Next(s.Length)]).ToArray());
+            _nazwiskoOdbiorcy = new string(Enumerable.Repeat(chars, 6)
+             .Select(s => s[rnd.Next(s.Length)]).ToArray());
+            _nazwiskoNadawcy = new string(Enumerable.Repeat(chars, 6)
+             .Select(s => s[rnd.Next(s.Length)]).ToArray());
         }
         public int NumerPaczki { get; set; }
         public int NumerPrzewozowy => _numerPrzewozowy;
