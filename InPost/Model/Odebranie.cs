@@ -23,7 +23,7 @@ namespace InPost.Model
             //if (inputDialog.ShowDialog() == true && inputDialog.Answer != null)
             //{
             Random rnd = new Random();
-            _numerPaczki = rnd.Next(1,100);
+            _numerPaczki = rnd.Next(1,32);
             //}
             _ktoryPaczkomat = gdzieOdbieramy;
         }

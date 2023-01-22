@@ -20,6 +20,7 @@ namespace InPost.ViewModels
 {
     public class PaczkomatViewModel : INotifyPropertyChanged
     {
+        public static MainViewModel Model;
         public event PropertyChangedEventHandler PropertyChanged;
         public ICommand NadajPaczkeCommand { get; set; }
         public ICommand OdbierzPaczkeCommand { get; set; }
@@ -27,7 +28,15 @@ namespace InPost.ViewModels
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-        
+        public string IlePelnych
+        {
+            get => Paczkomat.IlePelnych;
+            set
+            {
+                //Paczkomat.IlePelnych = value;
+                OnPropertyChanged();
+            }
+        }
         SynchronizationContext uiContext;
         public Paczkomat Paczkomat { get; set; }
         public string TEST = "TEST";
@@ -61,10 +70,10 @@ namespace InPost.ViewModels
             for(int i=0; i<1000;i+=2)
             {
                 int nrPaczkomatu = rnd.Next(1, 4);
-                uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].NadajPaczkeClick("Nadałeś paczkę!",i), null);
+                if (Model.IleKurierow > 0) { Model.IleKurierow--; uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].NadajPaczkeClick("Nadałeś paczkę!", i), null); }
                 nrPaczkomatu = rnd.Next(1, 4);
-                uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].OdbierzPaczkeClick("Odebrałeś paczkę!",i+1), null);
-                await Task.Delay(1000);
+                if (Model.IleKlientow > 0) { Model.IleKlientow--; uiContext.Post(x => Paczkomat.SiecPaczkomatow[nrPaczkomatu - 1].OdbierzPaczkeClick("Odebrałeś paczkę!", i + 1), null); }
+                await Task.Delay(2000);
             }
         }
         private async void NadajPaczkeClick(object sender,int idZlecenia)
@@ -76,7 +85,7 @@ namespace InPost.ViewModels
             //Debug.WriteLine(x.NazwiskoOdbiorcy[0]);
             if (x.NazwiskoOdbiorcy is null) return;
             if (x.NazwiskoOdbiorcy[0] < 'K') doKtoregoPaczkomatu = 1;
-            else if (x.NazwiskoOdbiorcy[0] >= 'K' && x.NazwiskoOdbiorcy[0] < 'S') doKtoregoPaczkomatu = 2;
+            else if (x.NazwiskoOdbiorcy[0] >= 'K' && x.NazwiskoOdbiorcy[0] < 'c') doKtoregoPaczkomatu = 2;
             else doKtoregoPaczkomatu = 3;
             Nadanie _x = new Nadanie(x, doKtoregoPaczkomatu);
            
@@ -101,12 +110,14 @@ namespace InPost.ViewModels
                 if (!pom) 
                 {
                     // MessageBox.Show("Nie można nadać paczki.Paczkomat Pełny!");
+                    if (Model.IleKurierow < Model.IleKurierowMax) Model.IleKurierow++;
                     return; 
                 }
                 //MessageBox.Show(sender.ToString());
                 Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, y));
                 
                 Paczkomat.SiecPaczkomatow[doKtoregoPaczkomatu - 1].Paczkomat.PaczkiDoOdebrania.Add(y.Paczka);
+                IlePelnych = Paczkomat.IlePelnych;
             }
             else if(x !=null)
             {
@@ -115,6 +126,9 @@ namespace InPost.ViewModels
             //PaczkomatMain.History.Add(new OperacjaViewModel(1, y));
             //MainHistory.Add(new OperacjaViewModel(1, y));
             //MainHistory = PaczkomatMain.History;
+            //OnPropertyChanged();
+            if (Model.IleKurierow < Model.IleKurierowMax) Model.IleKurierow++;
+
         }
         private async void OdbierzPaczkeClick(object sender,int idZlecenia)
         {
@@ -132,8 +146,9 @@ namespace InPost.ViewModels
             //Wait(10);
             Paczkomat.KlienciWKolejce.Remove(y);
             if (!Paczkomat.OtwarteKomorki.Exists(x => x.NumerPaczki == y.NumerPaczki)) 
-            { 
-               // MessageBox.Show("Nie ma takiej paczki!"); 
+            {
+                // MessageBox.Show("Nie ma takiej paczki!"); 
+                if (Model.IleKlientow < Model.IleKlientowMax) Model.IleKlientow++;
                 return; 
             }
             Paczka x = Paczkomat.OtwarteKomorki.Find(x => x.NumerPaczki == y.NumerPaczki);
@@ -141,8 +156,10 @@ namespace InPost.ViewModels
             //MessageBox.Show(sender.ToString());
             Paczkomat.History.Insert(0, new OperacjaViewModel(Paczkomat.NrPaczkomatu, y));
             Paczkomat.PaczkiDoOdebrania.Remove(x);
+            IlePelnych = Paczkomat.IlePelnych;
             //MainHistory = PaczkomatMain.History;
-
+            //OnPropertyChanged();
+            if(Model.IleKlientow<Model.IleKlientowMax)Model.IleKlientow++;
         }
 
     }

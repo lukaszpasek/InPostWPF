@@ -69,7 +69,7 @@
                 </ItemsControl>
                 <TextBlock Margin="10,130,6,202" Grid.ColumnSpan="4"><Run Language="en-gb" Text="Historia:"/></TextBlock>
                 <TextBlock Margin="8,-16,8,354" Grid.ColumnSpan="4"><Run Language="en-gb" Text="KolejkaPrzedPaczkomatem:"/></TextBlock>
-                <TextBlock Margin="8,-16,0,340" Text="{Binding Paczkomat.IlePelnych, NotifyOnTargetUpdated=True}"  Grid.ColumnSpan="3" Grid.Column="5"/>
+                <TextBlock Margin="8,-16,0,340" Text="{Binding IlePelnych,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"  Grid.ColumnSpan="3" Grid.Column="5"/>
             </Grid>
         </GroupBox>
     </Grid>

@@ -15,14 +15,24 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using InPost.ViewModels;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
+
 namespace InPost.View
 {
     /// <summary>
     /// Interaction logic for Paczkomat.xaml
     /// </summary>
-    public partial class Paczkomat : UserControl
+    public partial class Paczkomat : UserControl,INotifyPropertyChanged
     {
         private readonly PaczkomatViewModel viewModel;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         public InPost.Model.Paczkomat Paczkomat1 { get; set; }
         public Paczkomat()
         {

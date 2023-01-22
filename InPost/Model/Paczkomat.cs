@@ -32,11 +32,14 @@ namespace InPost.Model
         private int _nadanePaczki;
         private Semaphore _pool;
         private Mutex mut = new Mutex();
-
+        private string _ilePelnych="";
         public int NrPaczkomatu => _nrPaczkomatu;
         public ConcurrentQueue<IOperacja> Q;
         private List<Komorka> K { get; }
-        public string IlePelnych => "Zapelniono" + _pos.ToString() + "skrytek";
+        public string IlePelnych
+        {
+            get => "Zapelniono: " + PaczkiDoOdebrania.Count.ToString() + " skrytek";
+        }
         public ObservableCollection<OperacjaViewModel> History { get; set; }
         public ObservableCollection<Paczka> PaczkiDoOdebrania { get; set; }
         public ObservableCollection<PaczkomatViewModel> SiecPaczkomatow { get; set; }
@@ -135,14 +138,14 @@ namespace InPost.Model
             if (x is Dostarczenie)
             {
                 Dostarczenie y = (Dostarczenie)x;
-                Task.Delay(1000);
+                Task.Delay(2000);
                 return this.ZaladujPaczke(y.Paczka);
 
             }
             else if(x is Odebranie)
             {
                 Odebranie y = (Odebranie)x;
-                Task.Delay(1000);
+                Task.Delay(2000);
                 Paczka tmp = this.OdbierzPaczke(y.NumerPaczki);
                 if (tmp is not null)  OtwarteKomorki.Add(tmp);
                 else return false;
@@ -150,7 +153,7 @@ namespace InPost.Model
             else
             {
                 Nadanie y = (Nadanie)x;
-                Task.Delay(1000);
+                Task.Delay(2000);
                 return true;
             }
             //Random rnd = new Random();
@@ -162,7 +165,7 @@ namespace InPost.Model
             IOperacja x;
             while(!Q.IsEmpty && Q.First().IdZlecenia !=t.IdZlecenia)
             {
-                Task.Delay(100);
+                Task.Delay(2000);
             }
             if (Q.IsEmpty) return false;
             Q.TryDequeue(out x);
@@ -172,7 +175,7 @@ namespace InPost.Model
             if (x is Dostarczenie)
             {
                 Dostarczenie y = (Dostarczenie)x;
-                Thread.Sleep(100);
+                Thread.Sleep(2000);
                 return this.ZaladujPaczke(y.Paczka);
 
             }
@@ -180,7 +183,7 @@ namespace InPost.Model
             {
                 Odebranie y = (Odebranie)x;
                 //Task.Delay(3000);
-                Thread.Sleep(500);
+                Thread.Sleep(1000);
                 Paczka tmp = OdbierzPaczke(y.NumerPaczki);
                 if (tmp is not null) OtwarteKomorki.Add(tmp);
                 else return false;
@@ -188,7 +191,7 @@ namespace InPost.Model
             else
             {
                 Nadanie y = (Nadanie)x;
-                Task.Delay(100);
+                Task.Delay(2000);
                 return true;
             }
             //Random rnd = new Random();

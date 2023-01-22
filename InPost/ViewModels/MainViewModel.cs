@@ -24,6 +24,9 @@ namespace InPost.ViewModels
         public Paczkomat Paczkomat1 { get; set; }
         public Paczkomat Paczkomat2 { get; set; }
         public Paczkomat Paczkomat3 { get; set; }
+
+        public int IleKurierowMax { get; }
+        public int IleKlientowMax { get; }
         public int IleKurierow { get; set; }
         public int IleKlientow { get; set; }
 
@@ -47,13 +50,15 @@ namespace InPost.ViewModels
             {
                 IleKurierow = Int32.Parse(inputDialog.Answer1);
                 IleKlientow = Int32.Parse(inputDialog.Answer2);
+                IleKlientowMax = IleKlientow;
+                IleKurierowMax = IleKurierow;
             }
             else
             {
                 MessageBox.Show("Niepowodzenie utworzenia paczki!");
                 return;
             }
-
+            PaczkomatViewModel.Model = this;
             MainHistory = new ObservableCollection<OperacjaViewModel>();
             SiecPaczkomatow = new ObservableCollection<PaczkomatViewModel>();
             Paczkomat1 = new Paczkomat(1);
